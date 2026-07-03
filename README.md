@@ -59,6 +59,38 @@ The portfolio comparison includes:
 - Market plus team features
 - Regularized market plus team features
 - Tuned market/model blend
+- Calibrated regularized logistic regression
+- Calibrated gradient boosting
+
+The notebook also compares proportional overround removal against power and Shin-style de-vigging.
+
+## Headline Results
+
+Out-of-sample test season: **2025-2026** (`E0 (1).csv`)  
+Test matches after odds filtering: **339**
+
+| Model | Log loss | Log loss vs opening market | Accuracy | Brier score |
+| --- | ---: | ---: | ---: | ---: |
+| Calibrated regularized LR | 1.257 | -0.091 | 0.490 | 0.619 |
+| Calibrated gradient boosting | 1.326 | -0.022 | 0.481 | 0.615 |
+| Team features only | 1.332 | -0.015 | 0.442 | 0.658 |
+| Elo only | 1.342 | -0.006 | 0.478 | 0.623 |
+| Opening market | 1.348 | 0.000 | 0.496 | 0.610 |
+
+The best probability model improves log loss versus the opening market, but the betting evidence is weaker. The best short-run flat-staking ROI came from the Elo-only model, but its average closing-line value was still negative:
+
+| Betting diagnostic | Value |
+| --- | ---: |
+| Best flat-staking ROI model | Elo only |
+| Bets placed | 266 |
+| ROI on staked | 2.36% |
+| Average CLV on bets | -0.72% |
+| Bootstrap CLV 95% CI | [-1.76%, 0.35%] |
+| Bootstrap CLV p-value vs zero | 0.179 |
+
+That is the central market-efficiency result: the model can find attractive-looking historical edges, but there is not strong evidence that those bets beat the closing line.
+
+![Calibration plot](reports/figures/calibration_plot.png)
 
 ## Key Takeaway
 
@@ -80,11 +112,7 @@ Open and run:
 premier_league_market_efficiency_model.ipynb
 ```
 
-The executed copy is:
-
-```text
-premier_league_market_efficiency_model_executed.ipynb
-```
+The committed notebook is executed end to end so GitHub renders the results and charts without needing to launch Jupyter.
 
 ## Requirements
 
